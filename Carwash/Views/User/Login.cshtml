@@ -18,7 +18,7 @@
     @using (Html.BeginForm())
     {
         <div class="wrapper">
-            <h2>Login</h2>
+            <h2>Iniciar Sesión</h2>
             <div class="form">
                 <div class="input-box">
                     @Html.EditorFor(model => model.username, new { htmlAttributes = new { @type = "text", @placeholder = "Ingresa tu usuario", @required = "" } })
@@ -31,7 +31,7 @@
                     <input type="Submit" value="Iniciar Sesión">
                 </div>
                 <div class="text">
-                    <h3>No tienes una cuenta?<a href="@Url.Action("Registration","User")">Registrate ahora</a></h3>
+                    <h3>No tienes una cuenta?<a href="@Url.Action("Registration","User")"> Registrate ahora</a></h3>
                 </div>
             </div>
         </div>
