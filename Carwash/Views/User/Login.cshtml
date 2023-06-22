@@ -1,0 +1,40 @@
+﻿@model Carwash.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> Lavacar - Iniciar Sesión </title>
+    <link rel="stylesheet" href="~/UserTemp/css/registration.css">
+</head>
+
+<body>
+
+    @using (Html.BeginForm())
+    {
+        <div class="wrapper">
+            <h2>Login</h2>
+            <div class="form">
+                <div class="input-box">
+                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @type = "text", @placeholder = "Ingresa tu usuario", @required = "" } })
+                </div>
+                <div class="input-box">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @placeholder = "Ingresa tu contraseña", @required = "" } })
+                </div>
+
+                <div class="input-box button">
+                    <input type="Submit" value="Iniciar Sesión">
+                </div>
+                <div class="text">
+                    <h3>No tienes una cuenta?<a href="@Url.Action("Registration","User")">Registrate ahora</a></h3>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
