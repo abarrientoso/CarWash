@@ -15,7 +15,9 @@ namespace Carwash.Models
     public partial class User
     {
         public int userId { get; set; }
-        public string username { get; set; }
         public string password { get; set; }
+        public string token_recovery { get; set; }
+        public Nullable<System.DateTime> date_created { get; set; }
+        public string email { get; set; }
     }
 }

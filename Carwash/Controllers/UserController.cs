@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Carwash.Models;
@@ -10,6 +13,7 @@ namespace Carwash.Controllers
     public class UserController : Controller
     {
         carwashEntities db = new carwashEntities();
+        string urlDomain = "https://localhost:44325/";
         // GET: User
         public ActionResult Index()
         {
@@ -37,7 +41,7 @@ namespace Carwash.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            var lg = db.Users1.Where(a=>a.username.Equals(user.username) && a.password.Equals(user.password)).FirstOrDefault();
+            var lg = db.Users1.Where(a=>a.email.Equals(user.email) && a.password.Equals(user.password)).FirstOrDefault();
             if (lg != null)
             {
                 return RedirectToAction("Index", "User");
@@ -47,76 +51,140 @@ namespace Carwash.Controllers
             }
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
+        public ActionResult ForgotPassword ()
         {
             return View();
         }
 
-        // GET: User/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult StartRecovery (string token)
         {
-            return View();
+            Models.ViewModel.RecoveryPasswordViewModel model = new Models.ViewModel.RecoveryPasswordViewModel();
+            model.token = token;
+            using (carwashEntities db = new carwashEntities())
+            {
+                if(model.token == null || model.token.Trim().Equals(""))
+                {
+                    ViewBag.Error = "El token ha expirado";
+                    return View("StartRecovery");
+                }
+                var oUser = db.Users1.Where(d => d.token_recovery == model.token).FirstOrDefault();
+                if(oUser == null)
+                {
+                    ViewBag.Error = "El token ha expirado";
+                    return View("StartRecovery");
+                }
+            }
+            
+            return View(model);
         }
 
-        // POST: User/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Recovery (Models.ViewModel.RecoveryPasswordViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                {
+                    return View("StartRecovery", model);
+                }
 
-                return RedirectToAction("Index");
+                using (Models.carwashEntities db = new Models.carwashEntities())
+                {
+                    var oUser = db.Users1.Where(d => d.token_recovery == model.token).FirstOrDefault();
+                    if(oUser != null)
+                    {
+                        oUser.password = GetSha256(model.Password);
+                        oUser.token_recovery = null;
+                        db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                throw new Exception(ex.Message);
             }
+
+            ViewBag.Message = "Contraseña modificada con exito";
+            return View("Index");
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult PasswordRecovery()
         {
-            return View();
+            Models.ViewModel.RecoveryViewModel model = new Models.ViewModel.RecoveryViewModel();
+            return View(model);
         }
 
-        // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult PasswordRecovery (Models.ViewModel.RecoveryViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View("ForgotPassword", model);
+                }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+                string token = GetSha256(Guid.NewGuid().ToString());
+
+                using (carwashEntities db = new carwashEntities())
+                {
+                    var oUser = db.Users1.Where(d => d.email == model.Email).FirstOrDefault();
+                    if (oUser != null)
+                    {
+                        oUser.token_recovery = token;
+                        db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+
+                        // Enviar mail
+                        SendEmail(oUser.email, token);
+                    }
+                }
+
                 return View();
             }
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            catch (Exception e)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                throw new Exception(e.Message);
             }
         }
+
+        #region HELPERS
+        private string GetSha256(string str)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] stream = null;
+            StringBuilder sb = new StringBuilder();
+            stream = sha256.ComputeHash(encoding.GetBytes(str));
+            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            return sb.ToString();
+        }
+
+        private void SendEmail(string toAddress, string token)
+        {
+            string fromAddress = "correo@correo.com";
+            string Contrasena = "su contraseña";
+            string url = urlDomain + "/User/StartRecovery/?token="+token;
+            string subject = "Recuperación de contraseña";
+            string body = "<p>Correo para recuperación de contraseña</p><br>"+
+                "<a href='"+ url + "'>Click para recuperar</a>";
+
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(fromAddress, Contrasena);
+
+            MailMessage message = new MailMessage(fromAddress, toAddress, subject, body);
+            message.IsBodyHtml = true;
+
+            client.Send(message);
+
+            client.Dispose();
+        }
+        #endregion
     }
 }

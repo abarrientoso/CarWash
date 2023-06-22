@@ -1,0 +1,41 @@
+﻿@model Carwash.Models.ViewModel.RecoveryPasswordViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Lavacar - Cambiar Contraseña</title>
+    <link rel="stylesheet" href="~/UserTemp/css/registration.css">
+</head>
+<body>
+
+            <div class="wrapper">
+                <h2>Cambiar contraseña</h2>
+                <form class="form" method="post" action="@Url.Content("~/User/Recovery")">
+                    @Html.HiddenFor(d=>d.token)
+                    <div class="input-box">
+                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @type = "text", @placeholder = "Crear contraseña", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red; margin-bottom:2px;" })
+                    </div>
+                    <div class="input-box">
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @type = "password", @placeholder = "Confirmar contraseña", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { style = "color:red; margin-bottom:2px;" })
+                    </div>
+                    <div style="color:red;">
+                        @ViewBag.Error
+                    </div>
+                    <div class="input-box button">
+                        <input type="Submit" value="Cambiar contraseña">
+                    </div>
+                    <div class="text">
+                        <h3><a href="@Url.Action("Login","User")">Volver al inicio</a></h3>
+                    </div>
+                </form>
+            </div>
+        
+    </body>
+</html>

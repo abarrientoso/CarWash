@@ -26,5 +26,14 @@ namespace Carwash.Models
         }
     
         public virtual DbSet<User> Users1 { get; set; }
+        public virtual DbSet<categoria_inventario> categoria_inventario { get; set; }
+        public virtual DbSet<categoria_servicios> categoria_servicios { get; set; }
+        public virtual DbSet<citas> citas { get; set; }
+        public virtual DbSet<cliente> cliente { get; set; }
+        public virtual DbSet<facturacion> facturacion { get; set; }
+        public virtual DbSet<inventario> inventario { get; set; }
+        public virtual DbSet<rol> rol { get; set; }
+        public virtual DbSet<servicios> servicios { get; set; }
+        public virtual DbSet<usuario> usuario { get; set; }
     }
 }

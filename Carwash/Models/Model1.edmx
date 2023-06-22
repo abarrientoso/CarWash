@@ -5,16 +5,260 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="carwashModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categoria_inventario">
+          <Key>
+            <PropertyRef Name="id_categoria_inventario" />
+          </Key>
+          <Property Name="id_categoria_inventario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categoria_servicios">
+          <Key>
+            <PropertyRef Name="id_categoria_servicios" />
+          </Key>
+          <Property Name="id_categoria_servicios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="citas">
+          <Key>
+            <PropertyRef Name="id_cita" />
+          </Key>
+          <Property Name="id_cita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_hora" Type="datetime" Nullable="false" />
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+          <Property Name="id_servicio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="facturacion">
+          <Key>
+            <PropertyRef Name="id_factura" />
+          </Key>
+          <Property Name="id_factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_hora" Type="datetime" Nullable="false" />
+          <Property Name="id_cita" Type="int" Nullable="false" />
+          <Property Name="id_producto" Type="int" Nullable="false" />
+          <Property Name="cantidad_producto" Type="int" Nullable="false" />
+          <Property Name="total_servicio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total_producto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventario">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_producto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="id_categoria_inventario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servicios">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="id_categoria_servicios" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="userId" />
           </Key>
           <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="nchar" MaxLength="1000" Nullable="false" />
+          <Property Name="email" Type="nchar" MaxLength="1000" Nullable="false" />
           <Property Name="password" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="token_recovery" Type="nchar" MaxLength="100" />
+          <Property Name="date_created" Type="datetime" />
         </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__citas__id_client__59FA5E80">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="citas" Type="Self.citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__citas__id_servic__5BE2A6F2">
+          <End Role="servicios" Type="Self.servicios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="citas" Type="Self.citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicios">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__citas__id_usuari__5AEE82B9">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="citas" Type="Self.citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__facturaci__id_ci__5EBF139D">
+          <End Role="citas" Type="Self.citas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="facturacion" Type="Self.facturacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citas">
+              <PropertyRef Name="id_cita" />
+            </Principal>
+            <Dependent Role="facturacion">
+              <PropertyRef Name="id_cita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__facturaci__id_pr__5FB337D6">
+          <End Role="inventario" Type="Self.inventario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="facturacion" Type="Self.facturacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventario">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="facturacion">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__inventari__id_ca__4F7CD00D">
+          <End Role="categoria_inventario" Type="Self.categoria_inventario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="inventario" Type="Self.inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria_inventario">
+              <PropertyRef Name="id_categoria_inventario" />
+            </Principal>
+            <Dependent Role="inventario">
+              <PropertyRef Name="id_categoria_inventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__servicios__id_ca__5441852A">
+          <End Role="categoria_servicios" Type="Self.categoria_servicios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="servicios" Type="Self.servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria_servicios">
+              <PropertyRef Name="id_categoria_servicios" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="id_categoria_servicios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_rol__571DF1D5">
+          <End Role="rol" Type="Self.rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="carwashModelStoreContainer">
+          <EntitySet Name="categoria_inventario" EntityType="Self.categoria_inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoria_servicios" EntityType="Self.categoria_servicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="citas" EntityType="Self.citas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="facturacion" EntityType="Self.facturacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventario" EntityType="Self.inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rol" EntityType="Self.rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="servicios" EntityType="Self.servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__citas__id_client__59FA5E80" Association="Self.FK__citas__id_client__59FA5E80">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__citas__id_servic__5BE2A6F2" Association="Self.FK__citas__id_servic__5BE2A6F2">
+            <End Role="servicios" EntitySet="servicios" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__citas__id_usuari__5AEE82B9" Association="Self.FK__citas__id_usuari__5AEE82B9">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__facturaci__id_ci__5EBF139D" Association="Self.FK__facturaci__id_ci__5EBF139D">
+            <End Role="citas" EntitySet="citas" />
+            <End Role="facturacion" EntitySet="facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__facturaci__id_pr__5FB337D6" Association="Self.FK__facturaci__id_pr__5FB337D6">
+            <End Role="inventario" EntitySet="inventario" />
+            <End Role="facturacion" EntitySet="facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__inventari__id_ca__4F7CD00D" Association="Self.FK__inventari__id_ca__4F7CD00D">
+            <End Role="categoria_inventario" EntitySet="categoria_inventario" />
+            <End Role="inventario" EntitySet="inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__servicios__id_ca__5441852A" Association="Self.FK__servicios__id_ca__5441852A">
+            <End Role="categoria_servicios" EntitySet="categoria_servicios" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_rol__571DF1D5" Association="Self.FK__usuario__id_rol__571DF1D5">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -22,15 +266,275 @@
       <Schema Namespace="carwashModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="carwashEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users1" EntityType="carwashModel.User" />
+          <EntitySet Name="categoria_inventario" EntityType="carwashModel.categoria_inventario" />
+          <EntitySet Name="categoria_servicios" EntityType="carwashModel.categoria_servicios" />
+          <EntitySet Name="citas" EntityType="carwashModel.citas" />
+          <EntitySet Name="cliente" EntityType="carwashModel.cliente" />
+          <EntitySet Name="facturacion" EntityType="carwashModel.facturacion" />
+          <EntitySet Name="inventario" EntityType="carwashModel.inventario" />
+          <EntitySet Name="rol" EntityType="carwashModel.rol" />
+          <EntitySet Name="servicios" EntityType="carwashModel.servicios" />
+          <EntitySet Name="usuario" EntityType="carwashModel.usuario" />
+          <AssociationSet Name="FK__inventari__id_ca__4F7CD00D" Association="carwashModel.FK__inventari__id_ca__4F7CD00D">
+            <End Role="categoria_inventario" EntitySet="categoria_inventario" />
+            <End Role="inventario" EntitySet="inventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__servicios__id_ca__5441852A" Association="carwashModel.FK__servicios__id_ca__5441852A">
+            <End Role="categoria_servicios" EntitySet="categoria_servicios" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__citas__id_client__59FA5E80" Association="carwashModel.FK__citas__id_client__59FA5E80">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__citas__id_servic__5BE2A6F2" Association="carwashModel.FK__citas__id_servic__5BE2A6F2">
+            <End Role="servicios" EntitySet="servicios" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__citas__id_usuari__5AEE82B9" Association="carwashModel.FK__citas__id_usuari__5AEE82B9">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="citas" EntitySet="citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__facturaci__id_ci__5EBF139D" Association="carwashModel.FK__facturaci__id_ci__5EBF139D">
+            <End Role="citas" EntitySet="citas" />
+            <End Role="facturacion" EntitySet="facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__facturaci__id_pr__5FB337D6" Association="carwashModel.FK__facturaci__id_pr__5FB337D6">
+            <End Role="inventario" EntitySet="inventario" />
+            <End Role="facturacion" EntitySet="facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_rol__571DF1D5" Association="carwashModel.FK__usuario__id_rol__571DF1D5">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="userId" />
           </Key>
           <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="1000" FixedLength="true" Unicode="true" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="token_recovery" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="date_created" Type="DateTime" Precision="3" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="1000" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="categoria_inventario">
+          <Key>
+            <PropertyRef Name="id_categoria_inventario" />
+          </Key>
+          <Property Name="id_categoria_inventario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="inventario" Relationship="carwashModel.FK__inventari__id_ca__4F7CD00D" FromRole="categoria_inventario" ToRole="inventario" />
+        </EntityType>
+        <EntityType Name="categoria_servicios">
+          <Key>
+            <PropertyRef Name="id_categoria_servicios" />
+          </Key>
+          <Property Name="id_categoria_servicios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="servicios" Relationship="carwashModel.FK__servicios__id_ca__5441852A" FromRole="categoria_servicios" ToRole="servicios" />
+        </EntityType>
+        <EntityType Name="citas">
+          <Key>
+            <PropertyRef Name="id_cita" />
+          </Key>
+          <Property Name="id_cita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_servicio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="carwashModel.FK__citas__id_client__59FA5E80" FromRole="citas" ToRole="cliente" />
+          <NavigationProperty Name="servicios" Relationship="carwashModel.FK__citas__id_servic__5BE2A6F2" FromRole="citas" ToRole="servicios" />
+          <NavigationProperty Name="usuario" Relationship="carwashModel.FK__citas__id_usuari__5AEE82B9" FromRole="citas" ToRole="usuario" />
+          <NavigationProperty Name="facturacion" Relationship="carwashModel.FK__facturaci__id_ci__5EBF139D" FromRole="citas" ToRole="facturacion" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="citas" Relationship="carwashModel.FK__citas__id_client__59FA5E80" FromRole="cliente" ToRole="citas" />
+        </EntityType>
+        <EntityType Name="facturacion">
+          <Key>
+            <PropertyRef Name="id_factura" />
+          </Key>
+          <Property Name="id_factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_cita" Type="Int32" Nullable="false" />
+          <Property Name="id_producto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad_producto" Type="Int32" Nullable="false" />
+          <Property Name="total_servicio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="total_producto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="total" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="citas" Relationship="carwashModel.FK__facturaci__id_ci__5EBF139D" FromRole="facturacion" ToRole="citas" />
+          <NavigationProperty Name="inventario" Relationship="carwashModel.FK__facturaci__id_pr__5FB337D6" FromRole="facturacion" ToRole="inventario" />
+        </EntityType>
+        <EntityType Name="inventario">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="id_categoria_inventario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria_inventario" Relationship="carwashModel.FK__inventari__id_ca__4F7CD00D" FromRole="inventario" ToRole="categoria_inventario" />
+          <NavigationProperty Name="facturacion" Relationship="carwashModel.FK__facturaci__id_pr__5FB337D6" FromRole="inventario" ToRole="facturacion" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="carwashModel.FK__usuario__id_rol__571DF1D5" FromRole="rol" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="servicios">
+          <Key>
+            <PropertyRef Name="id_servicio" />
+          </Key>
+          <Property Name="id_servicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="id_categoria_servicios" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria_servicios" Relationship="carwashModel.FK__servicios__id_ca__5441852A" FromRole="servicios" ToRole="categoria_servicios" />
+          <NavigationProperty Name="citas" Relationship="carwashModel.FK__citas__id_servic__5BE2A6F2" FromRole="servicios" ToRole="citas" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="citas" Relationship="carwashModel.FK__citas__id_usuari__5AEE82B9" FromRole="usuario" ToRole="citas" />
+          <NavigationProperty Name="rol" Relationship="carwashModel.FK__usuario__id_rol__571DF1D5" FromRole="usuario" ToRole="rol" />
+        </EntityType>
+        <Association Name="FK__inventari__id_ca__4F7CD00D">
+          <End Type="carwashModel.categoria_inventario" Role="categoria_inventario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.inventario" Role="inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria_inventario">
+              <PropertyRef Name="id_categoria_inventario" />
+            </Principal>
+            <Dependent Role="inventario">
+              <PropertyRef Name="id_categoria_inventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__servicios__id_ca__5441852A">
+          <End Type="carwashModel.categoria_servicios" Role="categoria_servicios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.servicios" Role="servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria_servicios">
+              <PropertyRef Name="id_categoria_servicios" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="id_categoria_servicios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__citas__id_client__59FA5E80">
+          <End Type="carwashModel.cliente" Role="cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.citas" Role="citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__citas__id_servic__5BE2A6F2">
+          <End Type="carwashModel.servicios" Role="servicios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.citas" Role="citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicios">
+              <PropertyRef Name="id_servicio" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_servicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__citas__id_usuari__5AEE82B9">
+          <End Type="carwashModel.usuario" Role="usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.citas" Role="citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="citas">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__facturaci__id_ci__5EBF139D">
+          <End Type="carwashModel.citas" Role="citas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.facturacion" Role="facturacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citas">
+              <PropertyRef Name="id_cita" />
+            </Principal>
+            <Dependent Role="facturacion">
+              <PropertyRef Name="id_cita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__facturaci__id_pr__5FB337D6">
+          <End Type="carwashModel.inventario" Role="inventario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.facturacion" Role="facturacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventario">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="facturacion">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_rol__571DF1D5">
+          <End Type="carwashModel.rol" Role="rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="carwashModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -40,9 +544,109 @@
         <EntitySetMapping Name="Users1">
             <EntityTypeMapping TypeName="carwashModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="token_recovery" ColumnName="token_recovery" />
                 <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoria_inventario">
+            <EntityTypeMapping TypeName="carwashModel.categoria_inventario">
+              <MappingFragment StoreEntitySet="categoria_inventario">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_categoria_inventario" ColumnName="id_categoria_inventario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoria_servicios">
+            <EntityTypeMapping TypeName="carwashModel.categoria_servicios">
+              <MappingFragment StoreEntitySet="categoria_servicios">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_categoria_servicios" ColumnName="id_categoria_servicios" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="citas">
+            <EntityTypeMapping TypeName="carwashModel.citas">
+              <MappingFragment StoreEntitySet="citas">
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="fecha_hora" ColumnName="fecha_hora" />
+                <ScalarProperty Name="id_cita" ColumnName="id_cita" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="carwashModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="facturacion">
+            <EntityTypeMapping TypeName="carwashModel.facturacion">
+              <MappingFragment StoreEntitySet="facturacion">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="total_producto" ColumnName="total_producto" />
+                <ScalarProperty Name="total_servicio" ColumnName="total_servicio" />
+                <ScalarProperty Name="cantidad_producto" ColumnName="cantidad_producto" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_cita" ColumnName="id_cita" />
+                <ScalarProperty Name="fecha_hora" ColumnName="fecha_hora" />
+                <ScalarProperty Name="id_factura" ColumnName="id_factura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventario">
+            <EntityTypeMapping TypeName="carwashModel.inventario">
+              <MappingFragment StoreEntitySet="inventario">
+                <ScalarProperty Name="id_categoria_inventario" ColumnName="id_categoria_inventario" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre_producto" ColumnName="nombre_producto" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="carwashModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servicios">
+            <EntityTypeMapping TypeName="carwashModel.servicios">
+              <MappingFragment StoreEntitySet="servicios">
+                <ScalarProperty Name="id_categoria_servicios" ColumnName="id_categoria_servicios" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="carwashModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -60,7 +664,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -133,6 +133,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\categoria_inventario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoria_servicios.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\citas.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cliente.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\facturacion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\inventario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -148,9 +166,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\rol.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\servicios.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\usuario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\RecoveryPasswordViewModel.cs" />
+    <Compile Include="Models\ViewModel\RecoveryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +223,57 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="UserTemp\css\index.css" />
     <Content Include="UserTemp\css\registration.css" />
+    <Content Include="UserTemp\css\style.css" />
+    <Content Include="UserTemp\img\about.jpg" />
     <Content Include="UserTemp\img\bg.jpg" />
+    <Content Include="UserTemp\img\blog-1.jpg" />
+    <Content Include="UserTemp\img\blog-2.jpg" />
+    <Content Include="UserTemp\img\blog-3.jpg" />
+    <Content Include="UserTemp\img\carousel-1.jpg" />
+    <Content Include="UserTemp\img\carousel-2.jpg" />
+    <Content Include="UserTemp\img\carousel-3.jpg" />
+    <Content Include="UserTemp\img\page-header.jpg" />
+    <Content Include="UserTemp\img\post-1.jpg" />
+    <Content Include="UserTemp\img\post-2.jpg" />
+    <Content Include="UserTemp\img\post-3.jpg" />
+    <Content Include="UserTemp\img\post-4.jpg" />
+    <Content Include="UserTemp\img\post-5.jpg" />
+    <Content Include="UserTemp\img\single.jpg" />
+    <Content Include="UserTemp\img\team-1.jpg" />
+    <Content Include="UserTemp\img\team-2.jpg" />
+    <Content Include="UserTemp\img\team-3.jpg" />
+    <Content Include="UserTemp\img\team-4.jpg" />
+    <Content Include="UserTemp\img\testimonial-1.jpg" />
+    <Content Include="UserTemp\img\testimonial-2.jpg" />
+    <Content Include="UserTemp\img\testimonial-3.jpg" />
+    <Content Include="UserTemp\img\testimonial-4.jpg" />
+    <Content Include="UserTemp\img\user.jpg" />
+    <Content Include="UserTemp\index.html" />
+    <Content Include="UserTemp\js\main.js" />
+    <Content Include="UserTemp\lib\animate\animate.css" />
+    <Content Include="UserTemp\lib\animate\animate.min.css" />
+    <Content Include="UserTemp\lib\counterup\counterup.min.js" />
+    <Content Include="UserTemp\lib\easing\easing.js" />
+    <Content Include="UserTemp\lib\easing\easing.min.js" />
+    <Content Include="UserTemp\lib\flaticon\backup.txt" />
+    <Content Include="UserTemp\lib\flaticon\font\flaticon.css" />
+    <Content Include="UserTemp\lib\flaticon\font\flaticon.html" />
+    <Content Include="UserTemp\lib\flaticon\font\Flaticon.svg" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\ajax-loader.gif" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.carousel.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.carousel.min.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.theme.default.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.theme.default.min.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.theme.green.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.theme.green.min.css" />
+    <Content Include="UserTemp\lib\owlcarousel\assets\owl.video.play.png" />
+    <Content Include="UserTemp\lib\owlcarousel\owl.carousel.js" />
+    <Content Include="UserTemp\lib\owlcarousel\owl.carousel.min.js" />
+    <Content Include="UserTemp\lib\waypoints\links.php" />
+    <Content Include="UserTemp\lib\waypoints\waypoints.min.js" />
+    <Content Include="UserTemp\mail\contact.js" />
+    <Content Include="UserTemp\mail\contact.php" />
+    <Content Include="UserTemp\mail\jqBootstrapValidation.min.js" />
     <Content Include="UserTemp\registration.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -213,6 +292,16 @@
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\PasswordRecovery.cshtml" />
+    <Content Include="Views\User\StartRecovery.cshtml" />
+    <Content Include="UserTemp\lib\flaticon\font\Flaticon.eot" />
+    <Content Include="UserTemp\lib\flaticon\font\Flaticon.ttf" />
+    <Content Include="UserTemp\lib\flaticon\font\Flaticon.woff" />
+    <Content Include="UserTemp\lib\flaticon\font\Flaticon.woff2" />
+    <Content Include="UserTemp\lib\flaticon\font\_flaticon.scss" />
+    <Content Include="UserTemp\lib\flaticon\license\license.pdf" />
+    <Content Include="UserTemp\lib\owlcarousel\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
