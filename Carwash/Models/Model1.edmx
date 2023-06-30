@@ -90,6 +90,7 @@
           <Property Name="password" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="token_recovery" Type="nchar" MaxLength="100" />
           <Property Name="date_created" Type="datetime" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -104,7 +105,7 @@
           <Property Name="contrasena" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="id_rol" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__citas__id_client__59FA5E80">
+        <Association Name="FK__citas__id_client__34C8D9D1">
           <End Role="cliente" Type="Self.cliente" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -118,7 +119,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__citas__id_servic__5BE2A6F2">
+        <Association Name="FK__citas__id_servic__36B12243">
           <End Role="servicios" Type="Self.servicios" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -132,7 +133,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__citas__id_usuari__5AEE82B9">
+        <Association Name="FK__citas__id_usuari__35BCFE0A">
           <End Role="usuario" Type="Self.usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -146,7 +147,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__facturaci__id_ci__5EBF139D">
+        <Association Name="FK__facturaci__id_ci__398D8EEE">
           <End Role="citas" Type="Self.citas" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -160,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__facturaci__id_pr__5FB337D6">
+        <Association Name="FK__facturaci__id_pr__3A81B327">
           <End Role="inventario" Type="Self.inventario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -174,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__inventari__id_ca__4F7CD00D">
+        <Association Name="FK__inventari__id_ca__2A4B4B5E">
           <End Role="categoria_inventario" Type="Self.categoria_inventario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -188,7 +189,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__servicios__id_ca__5441852A">
+        <Association Name="FK__servicios__id_ca__2F10007B">
           <End Role="categoria_servicios" Type="Self.categoria_servicios" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -202,7 +203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__usuario__id_rol__571DF1D5">
+        <Association Name="FK__usuario__id_rol__31EC6D26">
           <End Role="rol" Type="Self.rol" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -212,6 +213,18 @@
               <PropertyRef Name="id_rol" />
             </Principal>
             <Dependent Role="usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rol_User">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="User">
               <PropertyRef Name="id_rol" />
             </Dependent>
           </ReferentialConstraint>
@@ -227,37 +240,41 @@
           <EntitySet Name="servicios" EntityType="Self.servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__citas__id_client__59FA5E80" Association="Self.FK__citas__id_client__59FA5E80">
+          <AssociationSet Name="FK__citas__id_client__34C8D9D1" Association="Self.FK__citas__id_client__34C8D9D1">
             <End Role="cliente" EntitySet="cliente" />
             <End Role="citas" EntitySet="citas" />
           </AssociationSet>
-          <AssociationSet Name="FK__citas__id_servic__5BE2A6F2" Association="Self.FK__citas__id_servic__5BE2A6F2">
+          <AssociationSet Name="FK__citas__id_servic__36B12243" Association="Self.FK__citas__id_servic__36B12243">
             <End Role="servicios" EntitySet="servicios" />
             <End Role="citas" EntitySet="citas" />
           </AssociationSet>
-          <AssociationSet Name="FK__citas__id_usuari__5AEE82B9" Association="Self.FK__citas__id_usuari__5AEE82B9">
+          <AssociationSet Name="FK__citas__id_usuari__35BCFE0A" Association="Self.FK__citas__id_usuari__35BCFE0A">
             <End Role="usuario" EntitySet="usuario" />
             <End Role="citas" EntitySet="citas" />
           </AssociationSet>
-          <AssociationSet Name="FK__facturaci__id_ci__5EBF139D" Association="Self.FK__facturaci__id_ci__5EBF139D">
+          <AssociationSet Name="FK__facturaci__id_ci__398D8EEE" Association="Self.FK__facturaci__id_ci__398D8EEE">
             <End Role="citas" EntitySet="citas" />
             <End Role="facturacion" EntitySet="facturacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__facturaci__id_pr__5FB337D6" Association="Self.FK__facturaci__id_pr__5FB337D6">
+          <AssociationSet Name="FK__facturaci__id_pr__3A81B327" Association="Self.FK__facturaci__id_pr__3A81B327">
             <End Role="inventario" EntitySet="inventario" />
             <End Role="facturacion" EntitySet="facturacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__inventari__id_ca__4F7CD00D" Association="Self.FK__inventari__id_ca__4F7CD00D">
+          <AssociationSet Name="FK__inventari__id_ca__2A4B4B5E" Association="Self.FK__inventari__id_ca__2A4B4B5E">
             <End Role="categoria_inventario" EntitySet="categoria_inventario" />
             <End Role="inventario" EntitySet="inventario" />
           </AssociationSet>
-          <AssociationSet Name="FK__servicios__id_ca__5441852A" Association="Self.FK__servicios__id_ca__5441852A">
+          <AssociationSet Name="FK__servicios__id_ca__2F10007B" Association="Self.FK__servicios__id_ca__2F10007B">
             <End Role="categoria_servicios" EntitySet="categoria_servicios" />
             <End Role="servicios" EntitySet="servicios" />
           </AssociationSet>
-          <AssociationSet Name="FK__usuario__id_rol__571DF1D5" Association="Self.FK__usuario__id_rol__571DF1D5">
+          <AssociationSet Name="FK__usuario__id_rol__31EC6D26" Association="Self.FK__usuario__id_rol__31EC6D26">
             <End Role="rol" EntitySet="rol" />
             <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rol_User" Association="Self.FK_rol_User">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -307,6 +324,10 @@
             <End Role="rol" EntitySet="rol" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <AssociationSet Name="FK_rol_User" Association="carwashModel.FK_rol_User">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="User" EntitySet="Users1" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -317,6 +338,8 @@
           <Property Name="token_recovery" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="date_created" Type="DateTime" Precision="3" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="rol" Relationship="carwashModel.FK_rol_User" FromRole="User" ToRole="rol" />
         </EntityType>
         <EntityType Name="categoria_inventario">
           <Key>
@@ -395,6 +418,7 @@
           <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="usuario" Relationship="carwashModel.FK__usuario__id_rol__571DF1D5" FromRole="rol" ToRole="usuario" />
+          <NavigationProperty Name="User" Relationship="carwashModel.FK_rol_User" FromRole="rol" ToRole="User" />
         </EntityType>
         <EntityType Name="servicios">
           <Key>
@@ -535,6 +559,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rol_User">
+          <End Type="carwashModel.rol" Role="rol" Multiplicity="1" />
+          <End Type="carwashModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -544,6 +580,7 @@
         <EntitySetMapping Name="Users1">
             <EntityTypeMapping TypeName="carwashModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="date_created" ColumnName="date_created" />
                 <ScalarProperty Name="token_recovery" ColumnName="token_recovery" />

@@ -151,6 +151,14 @@ namespace Carwash.Controllers
             }
         }
 
+        public ActionResult UsersList()
+        {
+            List<User> users = db.Users1.ToList(); // Obtener todos los usuarios de la tabla
+
+            return View(users);
+           
+        }
+
         #region HELPERS
         private string GetSha256(string str)
         {

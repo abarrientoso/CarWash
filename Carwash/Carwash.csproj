@@ -302,6 +302,7 @@
     <Content Include="UserTemp\lib\flaticon\font\_flaticon.scss" />
     <Content Include="UserTemp\lib\flaticon\license\license.pdf" />
     <Content Include="UserTemp\lib\owlcarousel\LICENSE" />
+    <Content Include="Views\User\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
