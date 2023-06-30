@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
@@ -33,7 +34,7 @@ namespace Carwash.Controllers
             return View();
         }
 
-        public ActionResult Login ()
+        public ActionResult Login()
         {
             return View();
         }
@@ -41,46 +42,47 @@ namespace Carwash.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            var lg = db.Users1.Where(a=>a.email.Equals(user.email) && a.password.Equals(user.password)).FirstOrDefault();
+            var lg = db.Users1.Where(a => a.email.Equals(user.email) && a.password.Equals(user.password)).FirstOrDefault();
             if (lg != null)
             {
                 return RedirectToAction("Index", "User");
-            } else
+            }
+            else
             {
                 return RedirectToAction("Login", "User");
             }
         }
 
-        public ActionResult ForgotPassword ()
+        public ActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpGet]
-        public ActionResult StartRecovery (string token)
+        public ActionResult StartRecovery(string token)
         {
             Models.ViewModel.RecoveryPasswordViewModel model = new Models.ViewModel.RecoveryPasswordViewModel();
             model.token = token;
             using (carwashEntities db = new carwashEntities())
             {
-                if(model.token == null || model.token.Trim().Equals(""))
+                if (model.token == null || model.token.Trim().Equals(""))
                 {
                     ViewBag.Error = "El token ha expirado";
                     return View("StartRecovery");
                 }
                 var oUser = db.Users1.Where(d => d.token_recovery == model.token).FirstOrDefault();
-                if(oUser == null)
+                if (oUser == null)
                 {
                     ViewBag.Error = "El token ha expirado";
                     return View("StartRecovery");
                 }
             }
-            
+
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Recovery (Models.ViewModel.RecoveryPasswordViewModel model)
+        public ActionResult Recovery(Models.ViewModel.RecoveryPasswordViewModel model)
         {
             try
             {
@@ -92,7 +94,7 @@ namespace Carwash.Controllers
                 using (Models.carwashEntities db = new Models.carwashEntities())
                 {
                     var oUser = db.Users1.Where(d => d.token_recovery == model.token).FirstOrDefault();
-                    if(oUser != null)
+                    if (oUser != null)
                     {
                         oUser.password = GetSha256(model.Password);
                         oUser.token_recovery = null;
@@ -118,7 +120,7 @@ namespace Carwash.Controllers
         }
 
         [HttpPost]
-        public ActionResult PasswordRecovery (Models.ViewModel.RecoveryViewModel model)
+        public ActionResult PasswordRecovery(Models.ViewModel.RecoveryViewModel model)
         {
             try
             {
@@ -156,8 +158,45 @@ namespace Carwash.Controllers
             List<User> users = db.Users1.ToList(); // Obtener todos los usuarios de la tabla
 
             return View(users);
-           
+
         }
+
+        public ActionResult UpdateAll(string[] lista)
+        {
+            var users = db.Users1.ToList(); // Obtener todos los usuarios de la base de datos
+            int contador = 0;
+            foreach (var user in users)
+            {
+                /*string selectedRole = Request.Form[user.userId.ToString()]; // Obtener el valor seleccionado del formulario
+
+                // Actualizar el valor de id_rol según el valor seleccionado
+                if (selectedRole == "Administrador")
+                {
+                    user.id_rol = 1;
+                }
+                else if (selectedRole == "Cliente")
+                {
+                    user.id_rol = 2;
+                }
+                else if (selectedRole == "Empleado")
+                {
+                    user.id_rol = 3;
+                }*/
+                user.id_rol = int.Parse(lista[contador]);
+                contador++;
+
+                db.Users1.Attach(user);
+              
+
+                db.Entry(user).State = EntityState.Modified;
+
+                db.SaveChanges();
+            }
+
+
+            return RedirectToAction("UsersList");
+        }
+
 
         #region HELPERS
         private string GetSha256(string str)
@@ -175,10 +214,10 @@ namespace Carwash.Controllers
         {
             string fromAddress = "correo@correo.com";
             string Contrasena = "su contraseña";
-            string url = urlDomain + "/User/StartRecovery/?token="+token;
+            string url = urlDomain + "/User/StartRecovery/?token=" + token;
             string subject = "Recuperación de contraseña";
-            string body = "<p>Correo para recuperación de contraseña</p><br>"+
-                "<a href='"+ url + "'>Click para recuperar</a>";
+            string body = "<p>Correo para recuperación de contraseña</p><br>" +
+                "<a href='" + url + "'>Click para recuperar</a>";
 
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
@@ -194,5 +233,6 @@ namespace Carwash.Controllers
             client.Dispose();
         }
         #endregion
+
     }
 }

@@ -19,19 +19,18 @@ namespace Carwash.Models
         [Key]
         public int userId { get; set; }
 
-        [Required]
+        
         public string password { get; set; }
 
-        [Required]
+        
         public string token_recovery { get; set; }
 
-        [Required]
         public Nullable<System.DateTime> date_created { get; set; }
 
-        [Required]
+       
         public string email { get; set; }
 
-        [Required]
+       
         public int id_rol { get; set; }
     
         public virtual rol rol { get; set; }
