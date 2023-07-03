@@ -12,12 +12,15 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class inventories
     {
-        public int userId { get; set; }
-        public string password { get; set; }
-        public string token_recovery { get; set; }
-        public Nullable<System.DateTime> date_created { get; set; }
-        public string email { get; set; }
+        public int inventory_id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public int quantity { get; set; }
+        public decimal price { get; set; }
+        public int product_id { get; set; }
+    
+        public virtual products products { get; set; }
     }
 }

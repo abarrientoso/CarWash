@@ -12,22 +12,18 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class servicios
+    public partial class product_categories
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public servicios()
+        public product_categories()
         {
-            this.citas = new HashSet<citas>();
+            this.products = new HashSet<products>();
         }
     
-        public int id_servicio { get; set; }
-        public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public decimal precio { get; set; }
-        public int id_categoria_servicios { get; set; }
+        public int product_category_id { get; set; }
+        public string name { get; set; }
     
-        public virtual categoria_servicios categoria_servicios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<citas> citas { get; set; }
+        public virtual ICollection<products> products { get; set; }
     }
 }

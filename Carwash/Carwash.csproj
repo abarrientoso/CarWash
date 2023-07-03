@@ -133,22 +133,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\categoria_inventario.cs">
+    <Compile Include="Models\appointments.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\categoria_servicios.cs">
+    <Compile Include="Models\inventories.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\citas.cs">
+    <Compile Include="Models\invoiceDetails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\cliente.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\facturacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\inventario.cs">
+    <Compile Include="Models\invoices.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -166,18 +160,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\rol.cs">
+    <Compile Include="Models\products.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\servicios.cs">
+    <Compile Include="Models\product_categories.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs">
+    <Compile Include="Models\roles.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\usuario.cs">
+    <Compile Include="Models\users.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\ActivateAccountViewModel.cs" />
     <Compile Include="Models\ViewModel\RecoveryPasswordViewModel.cs" />
     <Compile Include="Models\ViewModel\RecoveryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -193,8 +188,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -302,6 +297,7 @@
     <Content Include="UserTemp\lib\flaticon\font\_flaticon.scss" />
     <Content Include="UserTemp\lib\flaticon\license\license.pdf" />
     <Content Include="UserTemp\lib\owlcarousel\LICENSE" />
+    <Content Include="Views\User\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

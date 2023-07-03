@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Carwash.Models.users>
+
+
+<style>
+    table {
+        margin-top: 15px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+<div class="container">
+    <form action="/User/UpdateAll" method="post">
+        <table>
+            <tr>
+                <th >ID de usuario</th>
+                <th >Correo</th>
+                <th class="text-center">Rol</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td>@Html.DisplayFor(modelItem => item.user_id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.email)</td>
+                    <td>
+                        <div class="product-info">
+                            <select name="lista[]" class="form-control text-center">
+                                @if (item.role_id.Equals(1))
+                                {
+                                    <option value="1" selected>Administrador</option>
+                                    <option value="2">Cliente</option>
+                                    <option value="3">Empleado</option>
+                                }
+                                else if (item.role_id.Equals(2))
+                                {
+                                    <option value="1" >Administrador</option>
+                                    <option value="2" selected>Cliente</option>
+                                    <option value="3">Empleado</option>
+                                }
+                                else if (item.role_id.Equals(3))
+                                {
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Cliente</option>
+                                    <option value="3" selected>Empleado</option>
+                                }
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.user_id }, new { @class = "btn btn-danger text-center" })
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <input type="submit" value="Actualizar" class="btn btn-custom" />
+    </form>
+</div>

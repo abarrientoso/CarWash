@@ -25,15 +25,13 @@ namespace Carwash.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users1 { get; set; }
-        public virtual DbSet<categoria_inventario> categoria_inventario { get; set; }
-        public virtual DbSet<categoria_servicios> categoria_servicios { get; set; }
-        public virtual DbSet<citas> citas { get; set; }
-        public virtual DbSet<cliente> cliente { get; set; }
-        public virtual DbSet<facturacion> facturacion { get; set; }
-        public virtual DbSet<inventario> inventario { get; set; }
-        public virtual DbSet<rol> rol { get; set; }
-        public virtual DbSet<servicios> servicios { get; set; }
-        public virtual DbSet<usuario> usuario { get; set; }
+        public virtual DbSet<appointments> appointments { get; set; }
+        public virtual DbSet<inventories> inventories { get; set; }
+        public virtual DbSet<invoiceDetails> invoiceDetails { get; set; }
+        public virtual DbSet<invoices> invoices { get; set; }
+        public virtual DbSet<product_categories> product_categories { get; set; }
+        public virtual DbSet<products> products { get; set; }
+        public virtual DbSet<roles> roles { get; set; }
+        public virtual DbSet<users> users { get; set; }
     }
 }

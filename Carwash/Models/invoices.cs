@@ -12,25 +12,19 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class usuario
+    public partial class invoices
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public usuario()
+        public invoices()
         {
-            this.citas = new HashSet<citas>();
+            this.invoiceDetails = new HashSet<invoiceDetails>();
         }
     
-        public int id_usuario { get; set; }
-        public string nombre { get; set; }
-        public string apellido1 { get; set; }
-        public string apellido2 { get; set; }
-        public string telefono { get; set; }
-        public string correo { get; set; }
-        public string contrasena { get; set; }
-        public int id_rol { get; set; }
+        public int invoice_id { get; set; }
+        public Nullable<int> user_id { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<citas> citas { get; set; }
-        public virtual rol rol { get; set; }
+        public virtual ICollection<invoiceDetails> invoiceDetails { get; set; }
     }
 }

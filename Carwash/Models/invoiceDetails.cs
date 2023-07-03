@@ -12,18 +12,16 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class facturacion
+    public partial class invoiceDetails
     {
-        public int id_factura { get; set; }
-        public System.DateTime fecha_hora { get; set; }
-        public int id_cita { get; set; }
-        public int id_producto { get; set; }
-        public int cantidad_producto { get; set; }
-        public decimal total_servicio { get; set; }
-        public decimal total_producto { get; set; }
-        public decimal total { get; set; }
+        public int detail_id { get; set; }
+        public Nullable<int> invoice_id { get; set; }
+        public Nullable<int> product_id { get; set; }
+        public Nullable<int> quantity { get; set; }
+        public Nullable<decimal> price { get; set; }
+        public Nullable<decimal> total { get; set; }
     
-        public virtual citas citas { get; set; }
-        public virtual inventario inventario { get; set; }
+        public virtual invoices invoices { get; set; }
+        public virtual products products { get; set; }
     }
 }

@@ -12,23 +12,25 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class inventario
+    public partial class products
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public inventario()
+        public products()
         {
-            this.facturacion = new HashSet<facturacion>();
+            this.inventories = new HashSet<inventories>();
+            this.invoiceDetails = new HashSet<invoiceDetails>();
         }
     
-        public int id_producto { get; set; }
-        public string nombre_producto { get; set; }
-        public string descripcion { get; set; }
-        public int cantidad { get; set; }
-        public decimal precio { get; set; }
-        public int id_categoria_inventario { get; set; }
+        public int product_id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public decimal price { get; set; }
+        public int product_category { get; set; }
     
-        public virtual categoria_inventario categoria_inventario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<facturacion> facturacion { get; set; }
+        public virtual ICollection<inventories> inventories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<invoiceDetails> invoiceDetails { get; set; }
+        public virtual product_categories product_categories { get; set; }
     }
 }

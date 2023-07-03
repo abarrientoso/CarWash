@@ -17,12 +17,13 @@
                 <h2>Cambiar contraseña</h2>
                 <form class="form" method="post" action="@Url.Content("~/User/Recovery")">
                     @Html.HiddenFor(d=>d.token)
+                    @Html.ValidationSummary()
                     <div class="input-box">
-                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @type = "text", @placeholder = "Crear contraseña", @required = "" } })
+                        @Html.PasswordFor(model => model.Password, new  { @type = "password", @placeholder = "Nueva contraseña", @required = "" } )
                         @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red; margin-bottom:2px;" })
                     </div>
                     <div class="input-box">
-                        @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @type = "password", @placeholder = "Confirmar contraseña", @required = "" } })
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @type = "password", @placeholder = "Confirmar contraseña", @required = "" } )
                         @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { style = "color:red; margin-bottom:2px;" })
                     </div>
                     <div style="color:red;">
