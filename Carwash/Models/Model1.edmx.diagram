@@ -4,26 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f16334699bd740aa95ff499267c001da" Name="Diagram1">
-        <EntityTypeShape EntityType="carwashModel.User" Width="1.5" PointX="1" PointY="0.875" />
-        <EntityTypeShape EntityType="carwashModel.categoria_inventario" Width="1.5" PointX="5.625" PointY="13.625" />
-        <EntityTypeShape EntityType="carwashModel.categoria_servicios" Width="1.5" PointX="3.375" PointY="1.625" />
-        <EntityTypeShape EntityType="carwashModel.citas" Width="1.5" PointX="7.875" PointY="1.125" />
-        <EntityTypeShape EntityType="carwashModel.cliente" Width="1.5" PointX="5.625" PointY="5.5" />
-        <EntityTypeShape EntityType="carwashModel.facturacion" Width="1.5" PointX="10.125" PointY="1" />
-        <EntityTypeShape EntityType="carwashModel.inventario" Width="1.5" PointX="7.875" PointY="13.125" />
-        <EntityTypeShape EntityType="carwashModel.rol" Width="1.5" PointX="3.375" PointY="9.375" />
-        <EntityTypeShape EntityType="carwashModel.servicios" Width="1.5" PointX="5.625" PointY="1.25" />
-        <EntityTypeShape EntityType="carwashModel.usuario" Width="1.5" PointX="5.625" PointY="8.625" />
-        <AssociationConnector Association="carwashModel.FK__inventari__id_ca__4F7CD00D" />
-        <AssociationConnector Association="carwashModel.FK__servicios__id_ca__5441852A" />
-        <AssociationConnector Association="carwashModel.FK__citas__id_client__59FA5E80" />
-        <AssociationConnector Association="carwashModel.FK__citas__id_servic__5BE2A6F2" />
-        <AssociationConnector Association="carwashModel.FK__citas__id_usuari__5AEE82B9" />
-        <AssociationConnector Association="carwashModel.FK__facturaci__id_ci__5EBF139D" />
-        <AssociationConnector Association="carwashModel.FK__facturaci__id_pr__5FB337D6" />
-        <AssociationConnector Association="carwashModel.FK__usuario__id_rol__571DF1D5" />
-        <AssociationConnector Association="carwashModel.FK_rol_User" />
+      <Diagram DiagramId="47c5a69377964a5990f60212d87e77f5" Name="Diagram1">
+        <EntityTypeShape EntityType="carwashModel.appointments" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.inventories" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.invoiceDetails" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.invoices" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.product_categories" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.products" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.roles" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.users" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="carwashModel.FK__inventori__produ__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__invoiceDe__invoi__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__invoiceDe__produ__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__products__produc__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__users__role_id__398D8EEE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

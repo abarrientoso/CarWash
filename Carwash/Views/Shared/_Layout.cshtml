@@ -22,11 +22,7 @@
     <link href="~/UserTemp/css/style.css" rel="stylesheet">
 </head>
 
-
-
-
 <body>
-    
     <!-- Nav Bar Start -->
     <div class="nav-bar">
         <div class="container">
@@ -38,21 +34,34 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="price.html" class="nav-item nav-link">Price</a>
-                        <a href="location.html" class="nav-item nav-link">Washing Points</a>
+                        <a href="https://localhost:44325/User/Index" class="nav-item nav-link active">Home</a>
+                        <a href="" class="nav-item nav-link">About</a>
+                        <a href="" class="nav-item nav-link">Service</a>
+                        <a href="" class="nav-item nav-link">Price</a>
+                        <a href="" class="nav-item nav-link">Washing Points</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu">
-                                <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                <a href="single.html" class="dropdown-item">Detail Page</a>
-                                <a href="team.html" class="dropdown-item">Team Member</a>
-                                <a href="booking.html" class="dropdown-item">Schedule Booking</a>
+                                <a href="" class="dropdown-item">Blog Grid</a>
+                                <a href="" class="dropdown-item">Detail Page</a>
+                                <a href="" class="dropdown-item">Team Member</a>
+                                <a href="" class="dropdown-item">Schedule Booking</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+
+                        @if (Session["Rol"] != null)
+                        {
+                            if (Session["Rol"].Equals("Administrador"))
+                            {
+                                <a href="https://localhost:44325/User/UsersList" class="nav-item nav-link">Lista usuarios</a>
+                            }
+
+                            <a href="https://localhost:44325/User/Logout" class="nav-item nav-link">Cerrar Sesión</a>
+                        }
+                        else
+                        {
+                            <a href="https://localhost:44325/User/Login" class="nav-item nav-link">Iniciar sesión</a>
+                        }
                     </div>
                     <div class="ml-auto">
                         <a class="btn btn-custom" href="#">Get Appointment</a>

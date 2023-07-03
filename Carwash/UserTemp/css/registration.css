@@ -94,3 +94,9 @@ form .text h3 a{
 form .text h3 a:hover{
   text-decoration: underline;
 }
+ a.regresar {
+    font-size: 17px;
+    letter-spacing: 1px;
+    font-family: "Poppins", sans-serif;
+    background-color: #4070f4 !important;
+}

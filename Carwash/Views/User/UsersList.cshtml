@@ -1,8 +1,9 @@
-﻿@model IEnumerable<Carwash.Models.User>
+﻿@model IEnumerable<Carwash.Models.users>
 
 
 <style>
     table {
+        margin-top: 15px;
         width: 100%;
         border-collapse: collapse;
     }
@@ -27,33 +28,32 @@
             <tr>
                 <th >ID de usuario</th>
                 <th >Correo</th>
-                <th >Fecha creado</th>
                 <th class="text-center">Rol</th>
+                <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
                 <tr>
                     
-                    <td>@Html.DisplayFor(modelItem => item.userId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.user_id)</td>
                     <td>@Html.DisplayFor(modelItem => item.email)</td>
-                    <td>@Html.DisplayFor(modelItem => item.date_created)</td>
                     <td>
                         <div class="product-info">
                             <select name="lista[]" class="form-control text-center">
-                                @if (item.id_rol.Equals(1))
+                                @if (item.role_id.Equals(1))
                                 {
                                     <option value="1" selected>Administrador</option>
                                     <option value="2">Cliente</option>
                                     <option value="3">Empleado</option>
                                 }
-                                else if (item.id_rol.Equals(2))
+                                else if (item.role_id.Equals(2))
                                 {
                                     <option value="1" >Administrador</option>
                                     <option value="2" selected>Cliente</option>
                                     <option value="3">Empleado</option>
                                 }
-                                else if (item.id_rol.Equals(3))
+                                else if (item.role_id.Equals(3))
                                 {
                                     <option value="1">Administrador</option>
                                     <option value="2">Cliente</option>
@@ -61,6 +61,9 @@
                                 }
                             </select>
                         </div>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.user_id }, new { @class = "btn btn-danger text-center" })
                     </td>
                 </tr>
             }
