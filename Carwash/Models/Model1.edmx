@@ -44,12 +44,32 @@
           <Property Name="user_id" Type="int" />
           <Property Name="date" Type="date" />
         </EntityType>
+        <EntityType Name="notifications">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="product_categories">
           <Key>
             <PropertyRef Name="product_category_id" />
           </Key>
           <Property Name="product_category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_stock">
+          <Key>
+            <PropertyRef Name="id_stock" />
+          </Key>
+          <Property Name="id_stock" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vendor" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="product_img" Type="image" Nullable="false" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -149,7 +169,9 @@
           <EntitySet Name="inventories" EntityType="Self.inventories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invoiceDetails" EntityType="Self.invoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invoices" EntityType="Self.invoices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notifications" EntityType="Self.notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product_categories" EntityType="Self.product_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product_stock" EntityType="Self.product_stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
@@ -222,6 +244,14 @@
           <Property Name="date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="invoiceDetails" Relationship="Self.FK__invoiceDe__invoi__49C3F6B7" FromRole="invoices" ToRole="invoiceDetails" />
         </EntityType>
+        <EntityType Name="notifications">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="product_categories">
           <Key>
             <PropertyRef Name="product_category_id" />
@@ -229,6 +259,18 @@
           <Property Name="product_category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="products" Relationship="Self.FK__products__produc__3E52440B" FromRole="product_categories" ToRole="products" />
+        </EntityType>
+        <EntityType Name="product_stock">
+          <Key>
+            <PropertyRef Name="id_stock" />
+          </Key>
+          <Property Name="id_stock" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vendor" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="product_img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -333,7 +375,9 @@
           <EntitySet Name="inventories" EntityType="Self.inventories" />
           <EntitySet Name="invoiceDetails" EntityType="Self.invoiceDetails" />
           <EntitySet Name="invoices" EntityType="Self.invoices" />
+          <EntitySet Name="notifications" EntityType="Self.notifications" />
           <EntitySet Name="product_categories" EntityType="Self.product_categories" />
+          <EntitySet Name="product_stock" EntityType="Self.product_stock" />
           <EntitySet Name="products" EntityType="Self.products" />
           <EntitySet Name="roles" EntityType="Self.roles" />
           <EntitySet Name="users" EntityType="Self.users" />
@@ -407,11 +451,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="carwashModel.notifications">
+              <MappingFragment StoreEntitySet="notifications">
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="product_categories">
             <EntityTypeMapping TypeName="carwashModel.product_categories">
               <MappingFragment StoreEntitySet="product_categories">
                 <ScalarProperty Name="product_category_id" ColumnName="product_category_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_stock">
+            <EntityTypeMapping TypeName="carwashModel.product_stock">
+              <MappingFragment StoreEntitySet="product_stock">
+                <ScalarProperty Name="id_stock" ColumnName="id_stock" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="vendor" ColumnName="vendor" />
+                <ScalarProperty Name="product_img" ColumnName="product_img" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

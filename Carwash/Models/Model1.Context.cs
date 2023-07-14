@@ -29,7 +29,9 @@ namespace Carwash.Models
         public virtual DbSet<inventories> inventories { get; set; }
         public virtual DbSet<invoiceDetails> invoiceDetails { get; set; }
         public virtual DbSet<invoices> invoices { get; set; }
+        public virtual DbSet<notifications> notifications { get; set; }
         public virtual DbSet<product_categories> product_categories { get; set; }
+        public virtual DbSet<product_stock> product_stock { get; set; }
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<users> users { get; set; }

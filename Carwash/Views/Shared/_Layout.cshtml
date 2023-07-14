@@ -20,6 +20,8 @@
 
     <!-- Template Stylesheet -->
     <link href="~/UserTemp/css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -48,6 +50,7 @@
                                 <a href="" class="dropdown-item">Schedule Booking</a>
                             </div>
                         </div>
+                        @Html.ActionLink("Producto", "Index", "Product", null, new { @class = "nav-item nav-link" })
 
                         @if (Session["Rol"] != null)
                         {
@@ -142,6 +145,9 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/UserTemp/lib/easing/easing.min.js"></script>
     <script src="~/UserTemp/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/UserTemp/lib/waypoints/waypoints.min.js"></script>

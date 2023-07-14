@@ -1,0 +1,144 @@
+﻿@model  IEnumerable<Carwash.Models.product_stock>
+
+
+<style>
+    table {
+        margin-top: 15px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .btn-actualiza {
+        background-color: rgb(32, 44, 69);
+        color: white !important;
+        border-radius: 100px;
+        margin-right: 5px !important;
+    }
+
+    .btn-elimina {
+        background-color: #E81C2E;
+        color: white !important;
+        border-radius: 100px;
+    }
+
+    .button-container {
+        display: flex;
+    }
+
+    .product_img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+</style>
+
+<div class="container">
+
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Vendor</th>
+            <th>Imagen</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.product_name)</td>
+                <td>@Html.DisplayFor(modelItem => item.description)</td>
+                <td>@Html.DisplayFor(modelItem => item.quantity)</td>
+                <td>@Html.DisplayFor(modelItem => item.price)</td>
+                <td>@Html.DisplayFor(modelItem => item.vendor)</td>
+                <td><img src="@Url.Action("GetImage", "Product", new { productId = item.id_stock })" alt="Imagen del producto" class="product_img" /></td>
+                <td>
+                    <div class="button-container">
+
+                        @if (Session["Rol"] != null)
+                        {
+                            if (Session["Rol"].Equals("Administrador"))
+                            {
+                        <a href="@Url.Action("Edit", "Product", new { id = item.id_stock })" class="btn btn-actualiza">Actualizar</a>
+                            }
+
+                        }
+                        
+
+                    <form action="@Url.Action("Delete", "Product", new { id = item.id_stock })" id="formularioMio-@item.id_stock" method="post" enctype="multipart/form-data">
+
+                        <script>
+                                    var formularioMio = document.getElementById('formularioMio-@item.id_stock');
+                                    formularioMio.addEventListener('submit', function (event) {
+                                        event.preventDefault();
+                                        mostrarMensaje();
+                                    });
+                                    function mostrarMensaje(MaterialId) {
+                                        Swal.fire({
+                                            title: '¿Esta seguro?',
+                                            text: "Se eliminara el material ",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#d33',
+                                            cancelButtonColor: '#3085d6',
+                                            confirmButtonText: 'Eliminar',
+                                            cancelButtonText: 'Cancelar'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                Swal.fire(
+                                                    'Eliminado!',
+                                                    'El material se ha eliminado con exito',
+                                                    'success'
+                                                ).then(function () {
+                                                     //document.forms[7].submit();
+                                                    var formularioMio = document.getElementById('formularioMio-' + MaterialId);
+                                                    formularioMio.submit();
+                                                });
+
+                                            }
+                                        })
+                                    }
+                        </script>
+                        <input value="@item.id_stock" name="id" hidden />
+
+                        @if (Session["Rol"] != null)
+                        {
+                            if (Session["Rol"].Equals("Administrador"))
+                            {
+                    <input onclick="mostrarMensaje(@item.id_stock)" type="button" value="Eliminar" class="btn btn-elimina" />
+                            }
+
+                        }
+
+                        
+                    </form>
+
+                    </div>
+                </td>
+
+            </tr>
+
+        }
+    </table>
+    <br />
+    @if (Session["Rol"] != null)
+    {
+        if (Session["Rol"].Equals("Administrador"))
+        {
+            <a href="@Url.Action("Create", "Product")" class="btn btn-custom">Crear</a>
+        }
+
+    }
+</div>

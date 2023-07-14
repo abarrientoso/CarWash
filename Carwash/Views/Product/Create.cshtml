@@ -1,0 +1,71 @@
+﻿@model Carwash.Models.product_stock
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .validacion {
+        color: red;
+    }
+</style>
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data", id = "formularioMio"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div style="margin-top: 0px; margin-bottom: 25px">
+        <section class="vh-100">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)">
+                            <div class="card-body p-5 text-center">
+                                <div class="form-group">
+
+
+                                    <label>Nombre</label>
+                                    @Html.TextBoxFor(model => model.product_name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Imagen</label>
+                                    <input type="file" name="imageFile" id="imageFile" class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Precio</label>
+                                    @Html.TextBoxFor(model => model.price, new { @class = "form-control", type = "number", min = "2" })
+                                    @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Vendor</label>
+                                    @Html.TextBoxFor(model => model.vendor, new { @class = "form-control" })
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Cantidad</label>
+                                    @Html.TextBoxFor(model => model.quantity, new { @class = "form-control", type = "number", min = "1" })
+                                    @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Descripcion</label>
+                                    @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Guardar" class="btn btn-success" />
+                                    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}

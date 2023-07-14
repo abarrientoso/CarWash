@@ -4,12 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="47c5a69377964a5990f60212d87e77f5" Name="Diagram1">
-        <EntityTypeShape EntityType="carwashModel.appointments" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+      <Diagram DiagramId="2ca89e86faee4e05bcd29d3deeb2a1f9" Name="Diagram1">
+        <EntityTypeShape EntityType="carwashModel.appointments" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.inventories" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.invoiceDetails" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.invoices" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.notifications" Width="1.5" PointX="7.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.product_categories" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.product_stock" Width="1.5" PointX="5.75" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.products" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.roles" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="carwashModel.users" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
