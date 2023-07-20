@@ -46,7 +46,7 @@ namespace Carwash.Controllers
 
             using (MailMessage mail = new MailMessage())
             {
-                mail.From = new MailAddress("andresjbo20@gmail.com");
+                mail.From = new MailAddress("correo@compania.com");
                 mail.To.Add(correoUsuario);
                 mail.Subject = "Gracias por contactarnos";
                 mail.Body = $"Hola {nombre}, Gracias por contactarnos. Hemos recibido tu mensaje y nos pondremos en contacto contigo pronto.";
@@ -57,7 +57,7 @@ namespace Carwash.Controllers
                     smtp.Host = "smtp.gmail.com";
                     smtp.Port = 587;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential("andresjbo20@gmail.com", "bovljragdkhonhuf");
+                    smtp.Credentials = new NetworkCredential("correo@compania", "password");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
@@ -69,7 +69,7 @@ namespace Carwash.Controllers
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress(correoUsuario);
-                mail.To.Add("andresjbo20@gmail.com");
+                mail.To.Add("correo@compania.com");
                 mail.Subject = $"Mensaje de contacto de usuario {nombre}";
                 mail.Body = $"Nombre: {nombre}<br/>Correo: {correoUsuario} <br/>Asunto: {subject}  <br/>Mensaje: {mensaje} ";
                 mail.IsBodyHtml = true;
@@ -79,7 +79,7 @@ namespace Carwash.Controllers
                     smtp.Host = "smtp.gmail.com";
                     smtp.Port = 587;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential("andresjbo20@gmail.com", "bovljragdkhonhuf");
+                    smtp.Credentials = new NetworkCredential("correo@compania", "password");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
