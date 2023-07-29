@@ -1,0 +1,63 @@
+﻿@model Carwash.Models.Vendors
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .validacion {
+        color: red;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <form style="margin-top: 0px; margin-bottom: 25px" asp-action="Create" method="post" id="formularioMio" enctype="multipart/form-data">
+        <section class="vh-100">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3)">
+                            <div class="card-body p-5 text-center">
+                                <div class="form-group">
+
+
+                                    <label>Nombre</label>
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Telefono</label>
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", type = "number", min = "2" })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Direccion</label>
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Correo</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", type = "email"})
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
+                                </div>                                
+                                <div class="form-group">
+                                    <input type="submit" value="Guardar" class="btn btn-success" />
+                                    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+}

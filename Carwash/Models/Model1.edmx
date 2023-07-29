@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="carwashModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="carwashModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="appointments">
           <Key>
             <PropertyRef Name="appointment_id" />
@@ -64,12 +64,14 @@
             <PropertyRef Name="id_stock" />
           </Key>
           <Property Name="id_stock" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="product_name" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="description" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="quantity" Type="int" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="vendor" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="product_img" Type="image" Nullable="false" />
+          <Property Name="id_vendor" Type="int" />
+          <Property Name="product_name" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="text" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="size" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="vendor_name" Type="varchar" MaxLength="100" />
+          <Property Name="product_image" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -104,6 +106,17 @@
           <Property Name="isActive" Type="bit" Nullable="false" />
           <Property Name="activation_token" Type="nchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <Association Name="FK__inventori__produ__412EB0B6">
           <End Role="products" Type="Self.products" Multiplicity="1" />
           <End Role="inventories" Type="Self.inventories" Multiplicity="*" />
@@ -137,6 +150,18 @@
             </Principal>
             <Dependent Role="invoiceDetails">
               <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product_s__id_ve__6442E2C9">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="product_stock" Type="Self.product_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_stock">
+              <PropertyRef Name="id_vendor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -175,6 +200,7 @@
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__inventori__produ__412EB0B6" Association="Self.FK__inventori__produ__412EB0B6">
             <End Role="products" EntitySet="products" />
             <End Role="inventories" EntitySet="inventories" />
@@ -187,6 +213,10 @@
             <End Role="products" EntitySet="products" />
             <End Role="invoiceDetails" EntitySet="invoiceDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK__product_s__id_ve__6442E2C9" Association="Self.FK__product_s__id_ve__6442E2C9">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="product_stock" EntitySet="product_stock" />
+          </AssociationSet>
           <AssociationSet Name="FK__products__produc__3E52440B" Association="Self.FK__products__produc__3E52440B">
             <End Role="product_categories" EntitySet="product_categories" />
             <End Role="products" EntitySet="products" />
@@ -196,8 +226,7 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="carwashModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -265,12 +294,15 @@
             <PropertyRef Name="id_stock" />
           </Key>
           <Property Name="id_stock" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="product_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="quantity" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="vendor" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="product_img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="id_vendor" Type="Int32" />
+          <Property Name="product_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vendor_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="product_image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Vendors" Relationship="carwashModel.FK__product_s__id_ve__6442E2C9" FromRole="product_stock" ToRole="Vendors" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -309,6 +341,18 @@
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="activation_token" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="roles" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="product_stock" Relationship="carwashModel.FK__product_s__id_ve__6442E2C9" FromRole="Vendors" ToRole="product_stock" />
         </EntityType>
         <Association Name="FK__inventori__produ__412EB0B6">
           <End Role="products" Type="Self.products" Multiplicity="1" />
@@ -381,6 +425,7 @@
           <EntitySet Name="products" EntityType="Self.products" />
           <EntitySet Name="roles" EntityType="Self.roles" />
           <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" />
           <AssociationSet Name="FK__inventori__produ__412EB0B6" Association="Self.FK__inventori__produ__412EB0B6">
             <End Role="products" EntitySet="products" />
             <End Role="inventories" EntitySet="inventories" />
@@ -401,7 +446,23 @@
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <AssociationSet Name="FK__product_s__id_ve__6442E2C9" Association="carwashModel.FK__product_s__id_ve__6442E2C9">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="product_stock" EntitySet="product_stock" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__product_s__id_ve__6442E2C9">
+          <End Type="carwashModel.Vendors" Role="Vendors" Multiplicity="0..1" />
+          <End Type="carwashModel.product_stock" Role="product_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_stock">
+              <PropertyRef Name="id_vendor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -472,12 +533,14 @@
             <EntityTypeMapping TypeName="carwashModel.product_stock">
               <MappingFragment StoreEntitySet="product_stock">
                 <ScalarProperty Name="id_stock" ColumnName="id_stock" />
+                <ScalarProperty Name="id_vendor" ColumnName="id_vendor" />
                 <ScalarProperty Name="product_name" ColumnName="product_name" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="size" ColumnName="size" />
                 <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="vendor" ColumnName="vendor" />
-                <ScalarProperty Name="product_img" ColumnName="product_img" />
+                <ScalarProperty Name="vendor_name" ColumnName="vendor_name" />
+                <ScalarProperty Name="product_image" ColumnName="product_image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -514,6 +577,18 @@
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="activation_token" ColumnName="activation_token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="carwashModel.Vendors">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

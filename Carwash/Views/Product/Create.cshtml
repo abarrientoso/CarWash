@@ -40,9 +40,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Vendor</label>
-                                    @Html.TextBoxFor(model => model.vendor, new { @class = "form-control" })
-
+                                    <label>Proveedor</label>
+                                    <select name="id_vendor" class="form-control">
+                                        @foreach (var item in ViewBag.idLocal)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
                                 </div>
 
 

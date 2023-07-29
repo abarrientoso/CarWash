@@ -35,5 +35,6 @@ namespace Carwash.Models
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<users> users { get; set; }
+        public virtual DbSet<Vendors> Vendors { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
@@ -172,6 +173,7 @@ namespace Carwash.Controllers
                         if (loginUser.role_id == 1)
                         {
                             Session["Rol"] = "Administrador";
+                            NotificationsList();
                         } 
                         else
                         {
@@ -191,6 +193,40 @@ namespace Carwash.Controllers
             }
 
             return View(user);
+        }
+
+        [HttpPost]
+        public JsonResult NotificationsList()
+        {
+            string rol = Session["Rol"] as string;
+
+            if (rol == "Administrador")
+            {
+                List<notifications> notifications = db.notifications.ToList();
+                return Json(notifications);
+            }
+
+            return Json(new { errorMessage = "No tiene permisos de administrador." });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteNotification(int notification_id)
+        {
+            try
+            {
+                var notification = db.notifications.Find(notification_id);
+                if (notification != null)
+                {
+                    db.notifications.Remove(notification);
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false, message = "Notificación no encontrada." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error al eliminar la notificación." });
+            }
         }
 
         public ActionResult Logout()
