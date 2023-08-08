@@ -75,11 +75,11 @@
 
                         @if (Session["Rol"] != null)
                         {
+                            <a href="https://localhost:44325/Appointment/Index" class="nav-item nav-link">Citas</a>
                             if (Session["Rol"].Equals("Administrador"))
                             {
                                 <a href="https://localhost:44325/User/UsersList" class="nav-item nav-link">Lista usuarios</a>
                                 <a href="https://localhost:44325/Vendor/Index" class="nav-item nav-link">Lista proveedores</a>
-
 
                                 <nav>
                                     <div class="icon" id="bell"> <img src="https://i.imgur.com/AC7dgLA.png" alt=""> </div>
@@ -90,6 +90,7 @@
 
 
                             }
+
 
                             <a href="https://localhost:44325/User/Logout" class="nav-item nav-link">Cerrar Sesión</a>
 

@@ -189,6 +189,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_appointments_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="carwashModelStoreContainer">
           <EntitySet Name="appointments" EntityType="Self.appointments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventories" EntityType="Self.inventories" Schema="dbo" store:Type="Tables" />
@@ -225,6 +237,10 @@
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <AssociationSet Name="FK_appointments_users" Association="Self.FK_appointments_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -238,6 +254,7 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users1" Relationship="carwashModel.FK_appointments_users1" FromRole="appointments" ToRole="users" />
         </EntityType>
         <EntityType Name="inventories">
           <Key>
@@ -341,6 +358,7 @@
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="activation_token" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="roles" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="users" ToRole="roles" />
+          <NavigationProperty Name="appointments1" Relationship="carwashModel.FK_appointments_users1" FromRole="users" ToRole="appointments" />
         </EntityType>
         <EntityType Name="Vendors">
           <Key>
@@ -450,6 +468,10 @@
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="product_stock" EntitySet="product_stock" />
           </AssociationSet>
+          <AssociationSet Name="FK_appointments_users1" Association="carwashModel.FK_appointments_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__product_s__id_ve__6442E2C9">
           <End Type="carwashModel.Vendors" Role="Vendors" Multiplicity="0..1" />
@@ -460,6 +482,18 @@
             </Principal>
             <Dependent Role="product_stock">
               <PropertyRef Name="id_vendor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_appointments_users1">
+          <End Type="carwashModel.users" Role="users" Multiplicity="1" />
+          <End Type="carwashModel.appointments" Role="appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

@@ -35,7 +35,6 @@ namespace Carwash.Controllers
             if (ModelState.IsValid)
             {
 
-
                 db.Vendors.Attach(feedback);
                 db.Entry(feedback).State = EntityState.Modified;
                 db.SaveChanges();

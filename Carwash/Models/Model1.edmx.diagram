@@ -22,6 +22,7 @@
         <AssociationConnector Association="carwashModel.FK__products__produc__3E52440B" ManuallyRouted="false" />
         <AssociationConnector Association="carwashModel.FK__users__role_id__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="carwashModel.FK__product_s__id_ve__6442E2C9" />
+        <AssociationConnector Association="carwashModel.FK_appointments_users1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -170,6 +170,8 @@ namespace Carwash.Controllers
 
                     if (isPasswordValid)
                     {
+
+                        Session["Email"] = loginUser.email;
                         if (loginUser.role_id == 1)
                         {
                             Session["Rol"] = "Administrador";

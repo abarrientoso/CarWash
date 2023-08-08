@@ -18,5 +18,7 @@ namespace Carwash.Models
         public System.DateTime date { get; set; }
         public System.TimeSpan time { get; set; }
         public int user_id { get; set; }
+    
+        public virtual users users1 { get; set; }
     }
 }
