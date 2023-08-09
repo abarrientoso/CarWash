@@ -293,6 +293,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\ActivateAccountViewModel.cs" />
+    <Compile Include="Models\ViewModel\AppointmentUserViewModel.cs" />
     <Compile Include="Models\ViewModel\ContactViewModel.cs" />
     <Compile Include="Models\ViewModel\NotificationsViewModel.cs" />
     <Compile Include="Models\ViewModel\RecoveryPasswordViewModel.cs" />
@@ -433,6 +434,7 @@
     <Content Include="Views\Appointment\Index.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
     <Content Include="Views\Appointment\Edit.cshtml" />
+    <Content Include="Views\Appointment\UsersAppointments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

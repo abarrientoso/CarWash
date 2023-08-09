@@ -1,4 +1,5 @@
 ﻿using Carwash.Models;
+using Carwash.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,10 +14,40 @@ namespace Carwash.Controllers
 {
     public class AppointmentController : Controller
     {
-
+        
         carwashEntities db = new carwashEntities();
         string urlDomain = "https://localhost:44325/";
-        // GET: Appointment
+
+        public ActionResult UsersAppointments()
+        {
+            string userEmail = Session["Email"] as string;
+            var user = db.users.FirstOrDefault(u => u.email == userEmail);
+
+            if (user != null)
+            {
+                int userId = user.user_id;
+
+                // Filtrar las citas asociadas al usuario logueado
+                List<appointments> userAppointments = db.appointments.Where(a => a.user_id == userId).ToList();
+                List<AppointmentUserViewModel> appointmentList = new List<AppointmentUserViewModel>();
+                foreach (var appointments in userAppointments)
+                {
+                    AppointmentUserViewModel appointmentUser = new AppointmentUserViewModel
+                    {
+                        appointment_id = appointments.appointment_id,
+                        date = appointments.date,
+                        email = user.email,
+                        phone = user.phone,
+                        time = appointments.time,
+                        name = user.name
+                    };
+                    appointmentList.Add(appointmentUser);
+                }
+                return View(appointmentList);
+            }
+            return RedirectToAction("Index", "User");
+        }
+
         public ActionResult Index()
         {
             string userEmail = Session["Email"] as string;
@@ -71,7 +102,14 @@ namespace Carwash.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("Index");
+                        if (Session["Rol"].Equals("Administrador"))
+                        {
+                            return RedirectToAction("UsersAppointments");
+                        } else
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        
                     }
                 }
                 else
