@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="carwashModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="carwashModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="appointments">
           <Key>
             <PropertyRef Name="appointment_id" />
@@ -13,6 +13,14 @@
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="time" Type="time" Precision="7" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Binnacle">
+          <Key>
+            <PropertyRef Name="idBinnacle" />
+          </Key>
+          <Property Name="idBinnacle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="inventories">
           <Key>
@@ -203,6 +211,7 @@
         </Association>
         <EntityContainer Name="carwashModelStoreContainer">
           <EntitySet Name="appointments" EntityType="Self.appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Binnacle" EntityType="Self.Binnacle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventories" EntityType="Self.inventories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invoiceDetails" EntityType="Self.invoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invoices" EntityType="Self.invoices" Schema="dbo" store:Type="Tables" />
@@ -242,7 +251,8 @@
             <End Role="appointments" EntitySet="appointments" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="carwashModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -254,7 +264,15 @@
           <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="users1" Relationship="carwashModel.FK_appointments_users1" FromRole="appointments" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.FK_appointments_users" FromRole="appointments" ToRole="users" />
+        </EntityType>
+        <EntityType Name="Binnacle">
+          <Key>
+            <PropertyRef Name="idBinnacle" />
+          </Key>
+          <Property Name="idBinnacle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="inventories">
           <Key>
@@ -319,7 +337,7 @@
           <Property Name="price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="vendor_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="product_image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Vendors" Relationship="carwashModel.FK__product_s__id_ve__6442E2C9" FromRole="product_stock" ToRole="Vendors" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK__product_s__id_ve__6442E2C9" FromRole="product_stock" ToRole="Vendors" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -357,21 +375,33 @@
           <Property Name="role_id" Type="Int32" Nullable="false" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="activation_token" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="appointments" Relationship="Self.FK_appointments_users" FromRole="users" ToRole="appointments" />
           <NavigationProperty Name="roles" Relationship="Self.FK__users__role_id__398D8EEE" FromRole="users" ToRole="roles" />
-          <NavigationProperty Name="appointments1" Relationship="carwashModel.FK_appointments_users1" FromRole="users" ToRole="appointments" />
         </EntityType>
         <EntityType Name="Vendors">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="product_stock" Relationship="carwashModel.FK__product_s__id_ve__6442E2C9" FromRole="Vendors" ToRole="product_stock" />
+          <NavigationProperty Name="product_stock" Relationship="Self.FK__product_s__id_ve__6442E2C9" FromRole="Vendors" ToRole="product_stock" />
         </EntityType>
+        <Association Name="FK_appointments_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__inventori__produ__412EB0B6">
           <End Role="products" Type="Self.products" Multiplicity="1" />
           <End Role="inventories" Type="Self.inventories" Multiplicity="*" />
@@ -420,6 +450,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__product_s__id_ve__6442E2C9">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="product_stock" Type="Self.product_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_stock">
+              <PropertyRef Name="id_vendor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__users__role_id__398D8EEE">
           <End Role="roles" Type="Self.roles" Multiplicity="1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -434,6 +476,7 @@
         </Association>
         <EntityContainer Name="carwashEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="appointments" EntityType="Self.appointments" />
+          <EntitySet Name="Binnacle" EntityType="Self.Binnacle" />
           <EntitySet Name="inventories" EntityType="Self.inventories" />
           <EntitySet Name="invoiceDetails" EntityType="Self.invoiceDetails" />
           <EntitySet Name="invoices" EntityType="Self.invoices" />
@@ -444,6 +487,10 @@
           <EntitySet Name="roles" EntityType="Self.roles" />
           <EntitySet Name="users" EntityType="Self.users" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" />
+          <AssociationSet Name="FK_appointments_users" Association="Self.FK_appointments_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
           <AssociationSet Name="FK__inventori__produ__412EB0B6" Association="Self.FK__inventori__produ__412EB0B6">
             <End Role="products" EntitySet="products" />
             <End Role="inventories" EntitySet="inventories" />
@@ -460,43 +507,15 @@
             <End Role="product_categories" EntitySet="product_categories" />
             <End Role="products" EntitySet="products" />
           </AssociationSet>
+          <AssociationSet Name="FK__product_s__id_ve__6442E2C9" Association="Self.FK__product_s__id_ve__6442E2C9">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="product_stock" EntitySet="product_stock" />
+          </AssociationSet>
           <AssociationSet Name="FK__users__role_id__398D8EEE" Association="Self.FK__users__role_id__398D8EEE">
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="FK__product_s__id_ve__6442E2C9" Association="carwashModel.FK__product_s__id_ve__6442E2C9">
-            <End Role="Vendors" EntitySet="Vendors" />
-            <End Role="product_stock" EntitySet="product_stock" />
-          </AssociationSet>
-          <AssociationSet Name="FK_appointments_users1" Association="carwashModel.FK_appointments_users1">
-            <End Role="users" EntitySet="users" />
-            <End Role="appointments" EntitySet="appointments" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK__product_s__id_ve__6442E2C9">
-          <End Type="carwashModel.Vendors" Role="Vendors" Multiplicity="0..1" />
-          <End Type="carwashModel.product_stock" Role="product_stock" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vendors">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="product_stock">
-              <PropertyRef Name="id_vendor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_appointments_users1">
-          <End Type="carwashModel.users" Role="users" Multiplicity="1" />
-          <End Type="carwashModel.appointments" Role="appointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="appointments">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -510,6 +529,15 @@
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Binnacle">
+            <EntityTypeMapping TypeName="carwashModel.Binnacle">
+              <MappingFragment StoreEntitySet="Binnacle">
+                <ScalarProperty Name="idBinnacle" ColumnName="idBinnacle" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

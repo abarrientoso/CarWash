@@ -12,13 +12,10 @@ namespace Carwash.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class appointments
+    public partial class Binnacle
     {
-        public int appointment_id { get; set; }
-        public System.DateTime date { get; set; }
-        public System.TimeSpan time { get; set; }
-        public int user_id { get; set; }
-    
-        public virtual users users { get; set; }
+        public int idBinnacle { get; set; }
+        public string type { get; set; }
+        public string description { get; set; }
     }
 }

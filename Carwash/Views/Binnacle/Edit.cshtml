@@ -1,4 +1,4 @@
-﻿@model Carwash.Models.appointments
+﻿@model Carwash.Models.Binnacle
 @{
     ViewBag.Title = "Edit";
 }
@@ -10,9 +10,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.appointment_id)
 
-    <form style="margin-top: 0px; margin-bottom: 25px" asp-action="Edit" method="post" id="formularioMio" enctype="multipart/form-data">
+    <form style="margin-top: 0px; margin-bottom: 25px" asp-action="Create" method="post" id="formularioMio" enctype="multipart/form-data">
         <section class="vh-100">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -21,21 +20,23 @@
                             <div class="card-body p-5 text-center">
                                 <div class="form-group">
 
+                                    @Html.TextBoxFor(model => model.idBinnacle, new { @class = "form-control", style = "display: none;" })
+                                    <label>Tipo</label>
+                                    @Html.DropDownListFor(model => model.type, new SelectList(new[] { "Ingreso", "Gasto" }), "Seleccione una opcion", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
 
-                                    <label>Fecha</label>
-                                    @Html.TextBoxFor(model => model.date, Model.date.ToString("yyyy-MM-dd"), new { @class = "form-control", @type = "date" })
-                                    @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
 
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label>Hora</label>
-                                    @Html.DropDownListFor(model => model.time, (IEnumerable<SelectListItem>)ViewBag.TimeOptions, new { @class = "form-control" })
+                                    <label>Monto</label>
+                                    @Html.TextBoxFor(model => model.description, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger", style = "font-style: italic; font-size: 12px;" })
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" value="Modificar cita" class="btn btn-success" />
+                                    <input type="submit" value="Guardar" class="btn btn-success" />
                                     @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
                                 </div>
                             </div>
@@ -46,5 +47,3 @@
         </section>
     </form>
 }
-
-

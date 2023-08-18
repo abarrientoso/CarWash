@@ -20,7 +20,7 @@ namespace Carwash.Controllers
     {
         carwashEntities db = new carwashEntities();
         string urlDomain = "https://localhost:44325/";
-        // GET: User
+
         public ActionResult Index()
         {
             return View();
@@ -170,7 +170,7 @@ namespace Carwash.Controllers
 
                     if (isPasswordValid)
                     {
-
+                        Session["LoggedInUser"] = loginUser;
                         Session["Email"] = loginUser.email;
                         if (loginUser.role_id == 1)
                         {
@@ -356,9 +356,45 @@ namespace Carwash.Controllers
             else {
                 return RedirectToAction("Login", "User");
             }
+        }
 
-            
+        public ActionResult UserEdit()
+        {
+            return View();
+        }
 
+        public ActionResult UserEdition()
+        {
+            var loggedInUser = Session["LoggedInUser"] as users;
+            return View(loggedInUser);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfile(users updatedUser)
+        {
+            var loggedInUser = Session["LoggedInUser"] as users;
+
+            if (ModelState.IsValid)
+            {
+                using (var db = new carwashEntities())
+                {
+                    var userToUpdate = db.users.Find(loggedInUser.user_id);
+
+                    if (userToUpdate != null)
+                    {
+                        userToUpdate.phone = updatedUser.phone;
+                        userToUpdate.name = updatedUser.name;
+
+                        db.Entry(userToUpdate).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        Session["LoggedInUser"] = userToUpdate;
+                        return RedirectToAction("UserEdit", "User");
+                    }
+                }
+            }
+
+            return View("UserEdition", updatedUser);
         }
 
         public ActionResult UpdateAll(string[] lista)

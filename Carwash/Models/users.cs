@@ -17,7 +17,7 @@ namespace Carwash.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
-            this.appointments1 = new HashSet<appointments>();
+            this.appointments = new HashSet<appointments>();
         }
     
         public int user_id { get; set; }
@@ -32,8 +32,8 @@ namespace Carwash.Models
         public bool isActive { get; set; }
         public string activation_token { get; set; }
     
-        public virtual roles roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<appointments> appointments1 { get; set; }
+        public virtual ICollection<appointments> appointments { get; set; }
+        public virtual roles roles { get; set; }
     }
 }

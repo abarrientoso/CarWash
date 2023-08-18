@@ -57,7 +57,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto">
                         <a href="https://localhost:44325/User/Index" class="nav-item nav-link active">Home</a>
-                        
+
                         <a href="@Url.Action("Contact_Form", "Contact")" class="nav-item nav-link">Contáctenos</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -78,24 +78,26 @@
                                 <a href="https://localhost:44325/User/UsersList" class="nav-item nav-link">Lista usuarios</a>
                                 <a href="https://localhost:44325/Vendor/Index" class="nav-item nav-link">Lista proveedores</a>
                                 <a href="https://localhost:44325/Appointment/UsersAppointments" class="nav-item nav-link">Citas usuarios</a>
-                                <nav>
-                                    <div class="icon" id="bell"> <img src="https://i.imgur.com/AC7dgLA.png" alt=""> </div>
-                                    <div class="notifications" id="box">
+                                @Html.ActionLink("Gastos", "Index", "Binnacle", new { id = 1 }, new { @class = "nav-item nav-link" })
+                                                    @Html.ActionLink("Ingreso", "Index", "Binnacle", new { id = 2 }, new { @class = "nav-item nav-link" })
+                                                    <nav>
+                                                        <div class="icon" id="bell"> <img src="https://i.imgur.com/AC7dgLA.png" alt=""> </div>
+                                                        <div class="notifications" id="box">
 
-                                    </div>
-                                </nav>
+                                                        </div>
+                                                    </nav>
 
 
-                            }
+                                                }
 
+                                                <a href="https://localhost:44325/User/UserEdit" class="nav-item nav-link">Mi perfil</a>
+                                                <a href="https://localhost:44325/User/Logout" class="nav-item nav-link">Cerrar Sesión</a>
 
-                            <a href="https://localhost:44325/User/Logout" class="nav-item nav-link">Cerrar Sesión</a>
-
-                        }
-                        else
-                        {
-                            <a href="https://localhost:44325/User/Login" class="nav-item nav-link">Iniciar sesión</a>
-                        }
+                                            }
+                                            else
+                                            {
+                                                <a href="https://localhost:44325/User/Login" class="nav-item nav-link">Iniciar sesión</a>
+                                            }
                     </div>
                     <div class="ml-auto">
                         <a class="btn btn-custom" href="#">Get Appointment</a>

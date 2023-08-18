@@ -1,0 +1,53 @@
+﻿@model Carwash.Models.users
+@{
+    ViewBag.Title = "UserEdition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var loggedInUser = Session["LoggedInUser"] as Carwash.Models.users;
+}
+
+@using (Html.BeginForm("UpdateProfile", "User", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.user_id)
+    <section class="vh-100" style="background-color: #f4f5f7;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-6 mb-4 mb-lg-0">
+                    <div class="card mb-3" style="border-radius: .5rem;">
+                        <div class="row g-0">
+                            <div class="col-md-4 gradient-custom text-center text-white"
+                                 style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                     alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                                <h5>@Html.TextBoxFor(model => model.name, new { @class = "form-control" })</h5>
+                                <p>Web Designer</p>
+                                <i class="far fa-edit mb-5"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <h6>Información</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>Correo</h6>
+                                            @Html.LabelFor(model => model.email, "Email")
+                                            @Html.TextBoxFor(model => model.email, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            @Html.LabelFor(model => model.phone, "Phone")
+                                            @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-4">
+                                    <button type="submit" class="btn btn-secondary">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+

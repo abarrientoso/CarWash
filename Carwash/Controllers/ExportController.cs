@@ -84,5 +84,37 @@ namespace Carwash.Controllers
                 }
             }
         }
+
+        public ActionResult ExportBinnacleExcel()
+        {
+            using (var db = new carwashEntities())
+            {
+
+                var binnacle = db.Binnacle.ToList();
+
+                DataTable tabla = new DataTable("Binnacle");
+                tabla.Columns.AddRange(new DataColumn[]
+                {
+            new DataColumn("ID", typeof(int)),
+            new DataColumn("Tipo", typeof(string)),
+            new DataColumn("Monto", typeof(string))
+                });
+
+                foreach (var binnacles in binnacle)
+                {
+                    tabla.Rows.Add(binnacles.idBinnacle, binnacles.type, binnacles.description);
+                }
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add(tabla);
+                    var memoryStream = new MemoryStream();
+                    workbook.SaveAs(memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+
+                    return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Bitacora.xlsx");
+                }
+            }
+        }
     }
 }

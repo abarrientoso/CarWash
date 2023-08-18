@@ -26,6 +26,7 @@ namespace Carwash.Models
         }
     
         public virtual DbSet<appointments> appointments { get; set; }
+        public virtual DbSet<Binnacle> Binnacle { get; set; }
         public virtual DbSet<inventories> inventories { get; set; }
         public virtual DbSet<invoiceDetails> invoiceDetails { get; set; }
         public virtual DbSet<invoices> invoices { get; set; }
